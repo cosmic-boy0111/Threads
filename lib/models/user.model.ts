@@ -9,7 +9,7 @@ const userSchema = new Schema({
     threads : [
         {
             type : Schema.Types.ObjectId,
-            ref : 'Thread'
+            ref : 'Threads'
         }
     ],
     onboarded : { type : Boolean, default : false },

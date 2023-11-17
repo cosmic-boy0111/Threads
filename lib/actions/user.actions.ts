@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import User from "../models/user.model";
 import { connectToDB } from "../mongoose"
-import _Iuser from "../interfaces";
+import { _Iuser } from "../interfaces";
 
 export const updateUser = async ({
     userId,
@@ -35,5 +35,19 @@ export const updateUser = async ({
 
     } catch (error : any) {
         throw new Error(`failed to create/update user : ${error.message}`)
+    }
+}
+
+export const fetchUser = async ( userId : string | undefined | null ) => {
+    try {
+        connectToDB();
+        return await User
+        .findOne({ id : userId })
+        // .populate({
+        //     path : 'communities',
+        //     model : Community
+        // })
+    } catch (error : any) {
+        throw new Error(`failed to fetch user : ${error.message}`)
     }
 }
