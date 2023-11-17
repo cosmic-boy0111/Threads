@@ -47,7 +47,7 @@ export const fetchPosts = async ( pageNumber : number , pageSize : number) => {
 
     // Fetch posts that have no parents (top-level posts ...)
     const postsQuery =  Threads.find({ parentId: { $in: [null,undefined] } })
-        .sort({ createdAt: 'desc' })
+        .sort({ createdAt:'desc' })
         .skip(skipAmount)
         .limit(pageSize)
         .populate({ path : 'author', model : User })
@@ -93,10 +93,14 @@ export const fetchThreadById = async (id : string) => {
                         select : "_id id name parentId image"
                     },
                     {
-                        path : 'children',
-                        model : Threads,
-                        select : "_id id name parentId image"
-                    }
+                        path: "children", // Populate the children field within children
+                        model: Threads, // The model of the nested children (assuming it's the same "Thread" model)
+                        populate: {
+                          path: "author", // Populate the author field within nested children
+                          model: User,
+                          select: "_id id name parentId image", // Select only _id and username fields of the author
+                        },
+                    },
                 ]
             }).exec();
 

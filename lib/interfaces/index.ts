@@ -50,3 +50,18 @@ export interface _IcommentToThread {
     userId : string,
     path : string
 }
+
+export interface _IprofileHeader {
+    accountId : string,
+    authUserId : string,
+    name : string,
+    username : string,
+    imgUrl : string,
+    bio : string,
+}
+
+export interface _IthreadsTabs {
+    currentUserId : string,
+    accountId : string,
+    accountType : string,
+}

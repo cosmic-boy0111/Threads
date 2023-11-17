@@ -1,4 +1,4 @@
-import mongoose, {Schema, model, models} from "mongoose";
+import mongoose, {Schema, model, models, deleteModel} from "mongoose";
 
 const threadsSchema = new Schema({
     text : { type : "string" , required: true },
@@ -13,7 +13,7 @@ const threadsSchema = new Schema({
     },
     createdAt : {
         type : Date,
-        default : Date.now(),    
+        default : new Date(),    
     },
     parentId : {
         type : String,
@@ -25,6 +25,8 @@ const threadsSchema = new Schema({
         }
     ]
 })
+
+if(models.Threads) deleteModel('Threads')
 
 const Threads = models.Threads || model("Threads" , threadsSchema);
 

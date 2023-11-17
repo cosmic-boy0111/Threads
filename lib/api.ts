@@ -4,12 +4,13 @@ import {
     fetchPosts, 
     fetchThreadById 
 } from "./actions/thread.actions";
-import { fetchUser, updateUser } from "./actions/user.actions"
+import { fetchUser, fetchUserPosts, updateUser } from "./actions/user.actions"
 import { _IcommentToThread, _Ithread, _Iuser } from "./interfaces";
 
 class User {
     _updateUser = (data : _Iuser) => updateUser(data);
     _fetchUser = (userId : string | undefined | null) => fetchUser(userId);
+    _fetchUserPosts = (userId : string) => fetchUserPosts(userId);
 }
 
 class Thread {
