@@ -14,7 +14,7 @@ const page = async ({ params }: { params: { id: string } }) => {
     if(!userInfo?.onboarded) redirect('/onboarding');
 
     const thread = await Api._thread._fetchThreadById(params.id);
-
+    
     return (
         <section className=" relative" >
             <div>
@@ -32,11 +32,28 @@ const page = async ({ params }: { params: { id: string } }) => {
             </div>
 
             <div className=" mt-7 ">
-                {/* <Comment
+                <Comment
                     threadId={thread._id}
-                    currentUserImage={user.imageUrl}
+                    currentUserImage={userInfo.image}
                     currentUserId={JSON.stringify(userInfo._id)} 
-                /> */}
+                />
+            </div>
+
+            <div className=" mt-10">
+                {thread.children.map((childItem : any) => {
+                    return <ThreadCard
+                                key={childItem._id}
+                                id={childItem._id}
+                                currentUserId={user?.id || ""}
+                                parentId={childItem.parentId}
+                                content={childItem.text}
+                                author={childItem.author}
+                                community={childItem.community}
+                                createdAt={childItem.createdAt}
+                                comments={childItem.children}
+                                isComment={true}
+                            />
+                })}
             </div>
         </section>
     )

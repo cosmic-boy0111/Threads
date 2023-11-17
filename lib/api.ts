@@ -1,7 +1,11 @@
-
-import { createThread, fetchPosts, fetchThreadById } from "./actions/thread.actions";
+import { 
+    addCommentToThread, 
+    createThread, 
+    fetchPosts, 
+    fetchThreadById 
+} from "./actions/thread.actions";
 import { fetchUser, updateUser } from "./actions/user.actions"
-import { _Ithread, _Iuser } from "./interfaces";
+import { _IcommentToThread, _Ithread, _Iuser } from "./interfaces";
 
 class User {
     _updateUser = (data : _Iuser) => updateUser(data);
@@ -12,6 +16,7 @@ class Thread {
     _createThread = (data : _Ithread) => createThread(data);
     _fetchPosts = (pageNumber = 1, pageSize = 20) => fetchPosts(pageNumber,pageSize);
     _fetchThreadById = (id : string) => fetchThreadById(id);
+    _addCommentToThread = ( data : _IcommentToThread ) => addCommentToThread(data);
 }
 
 

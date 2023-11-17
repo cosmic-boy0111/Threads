@@ -37,3 +37,16 @@ export interface _IthreadCard {
     }[],
     isComment? : boolean
 }
+
+export interface _Icomment {
+    threadId : string,
+    currentUserImage : string,
+    currentUserId : string
+}
+
+export interface _IcommentToThread {
+    threadId : string,
+    commentText : string,
+    userId : string,
+    path : string
+}

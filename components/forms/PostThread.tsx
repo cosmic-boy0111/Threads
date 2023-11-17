@@ -19,18 +19,6 @@ import { usePathname, useRouter } from 'next/navigation'
 import { Api } from '@/lib/api'
 import { ThreadValidation } from "@/lib/validations/thread";
 
-interface Props {
-    user: {
-        id: string,
-        objectId: string,
-        username: string,
-        name: string,
-        bio: string,
-        image: string
-    };
-    btnTitle: string
-}
-
 
 const PostThread = ({ userId }: { userId: string }) => {
 
@@ -72,7 +60,7 @@ const PostThread = ({ userId }: { userId: string }) => {
                             </FormLabel>
                             <FormControl className=' no-focus border-dark-4 bg-dark-3 text-light-1' >
                                 <Textarea
-                                    rows={15}
+                                    rows={12}
                                     {...field}
                                 />
                             </FormControl>

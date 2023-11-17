@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import Threads from "../models/thread.model";
 import User from "../models/user.model";
 import { connectToDB } from "../mongoose"
-import { _Ithread } from "../interfaces";
+import { _IcommentToThread, _Ithread } from "../interfaces";
 
 export const createThread = async ( 
     {  
@@ -47,7 +47,7 @@ export const fetchPosts = async ( pageNumber : number , pageSize : number) => {
 
     // Fetch posts that have no parents (top-level posts ...)
     const postsQuery =  Threads.find({ parentId: { $in: [null,undefined] } })
-        .sort({ createdAt : 'desc' })
+        .sort({ createdAt: 'desc' })
         .skip(skipAmount)
         .limit(pageSize)
         .populate({ path : 'author', model : User })
@@ -105,4 +105,43 @@ export const fetchThreadById = async (id : string) => {
     } catch (error : any) {
         throw new Error(`Error while fetching thread : ${error.message}`);
     }
+}
+
+export const addCommentToThread = async ({
+    threadId,
+    commentText,
+    userId,
+    path
+} : _IcommentToThread) => {
+
+    connectToDB();
+
+    try {
+        
+        // find th original thread by id
+        const originalThread = await Threads.findById(threadId);
+        if(!originalThread) throw new Error(`Thread not found`)
+
+        // create new thread as comment
+        const commentThread = new Threads({
+            text : commentText,
+            author : userId,
+            parentId : threadId,
+        })
+
+        // save comment
+        const savedCommentThread = await commentThread.save();
+
+        // update original thread
+        originalThread.children.push(savedCommentThread._id);
+
+        // save original thread
+        await originalThread.save();
+
+        revalidatePath(path);
+
+    } catch (error : any) {
+        throw new Error(`Error while adding comment to thread : ${error.message}`);
+    }
+
 }
