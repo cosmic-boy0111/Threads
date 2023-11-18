@@ -1,26 +1,29 @@
 import {Schema, model, models} from "mongoose";
 
-const userSchema = new Schema({
+const communitySchema = new Schema({
     id : { type : String, require : true},
     username : { type : String, require : true, unique : true},
     name : { type : String, require : true},
     image : String,
     bio : String,
+    createdBy : {
+        type : Schema.Types.ObjectId,
+        ref : 'User'
+    },
     threads : [
         {
             type : Schema.Types.ObjectId,
             ref : 'Threads'
         }
     ],
-    onboarded : { type : Boolean, default : false },
-    communities : [
+    members : [
         {
             type : Schema.Types.ObjectId,
-            ref : 'Community'
+            ref : 'User'
         }
     ]
 })
 
-const User = models.User || model("User" , userSchema);
+const Community = models.Community || model("Community" , communitySchema);
 
-export default User;
+export default Community;
