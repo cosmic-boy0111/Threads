@@ -1,3 +1,5 @@
+import { SortOrder } from "mongoose";
+
 export interface _Iuser {
     userId : string | undefined;
     username : string,
@@ -64,4 +66,12 @@ export interface _IthreadsTabs {
     currentUserId : string,
     accountId : string,
     accountType : string,
+}
+
+export interface _Iusers {
+    userId: string,
+    searchString?: string,
+    pageNumber?: number,
+    pageSize?: number,
+    sortBy?: SortOrder
 }

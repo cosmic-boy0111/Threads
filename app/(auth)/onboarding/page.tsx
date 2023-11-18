@@ -9,9 +9,8 @@ const page = async () => {
   const user = await currentUser();
   if (!user) return null;
 
-  // const userInfo = await Api._user._fetchUser(user?.id) ;
-  const userInfo = {} ;
-  // if (userInfo?.onboarded) redirect("/");
+  const userInfo = await Api._user._fetchUser(user?.id) ;
+  if (userInfo?.onboarded) redirect("/");
 
   const userData = {
     id : user?.id,
